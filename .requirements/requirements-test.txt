@@ -8,5 +8,5 @@ pycln==2.0.3
 isort==5.10.1
 gitchangelog==3.0.4
 mako==1.2.1
-jaxdf @ git+https://github.com/ucl-bug/jaxdf.git#egg=jaxdf=
+jaxdf @ git+https://github.com/djps/jaxdf.git#egg=jaxdf=
 pystache==0.6.0

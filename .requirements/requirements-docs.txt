@@ -3,7 +3,7 @@ flake8==4.0.1
 gitchangelog==3.0.4
 griffe==0.22.0
 isort==5.10.1
-jaxdf @ git+https://github.com/ucl-bug/jaxdf.git#egg=jaxdf=
+jaxdf @ git+https://github.com/djps/jaxdf.git#egg=jaxdf=
 jupytext==1.14.0
 mako==1.2.1
 markdown-katex==202112.1034
