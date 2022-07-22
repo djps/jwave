@@ -5,13 +5,15 @@
 # j-Wave: Differentiable acoustic simulations in JAX
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](LICENSE)
-[![Continous Integration](https://github.com/ucl-bug/jwave/actions/workflows/main.yml/badge.svg)](https://github.com/ucl-bug/jwave/actions/workflows/main.yml)
+[![Continous Integration](https://github.com/djps/jwave/actions/workflows/main.yml/badge.svg)](https://github.com/djps/jwave/actions/workflows/main.yml) 
+<!-- 
 [![codecov](https://codecov.io/gh/ucl-bug/jwave/branch/main/graph/badge.svg?token=6J03OMVJS1)](https://codecov.io/gh/ucl-bug/jwave)
 [![Documentation](https://github.com/ucl-bug/jwave/actions/workflows/build_docs.yml/badge.svg)](https://ucl-bug.github.io/jwave)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ucl-bug/jwave/main?labpath=docs%2Fnotebooks%2Fivp%2Fhomogeneous_medium.ipynb)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1xAHAognF1v9un6GNvaGPSfdVeCDK8l9z?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1xAHAognF1v9un6GNvaGPSfdVeCDK8l9z?usp=sharing) 
+-->
 
-[Install](#install) | [Tutorials](https://ucl-bug.github.io/jwave/notebooks/ivp/homogeneous_medium.html) | [Documentation](https://ucl-bug.github.io/jwave) | [Changelog](HISTORY.md)
+[Install](#install) | [**UCL** Tutorials](https://ucl-bug.github.io/jwave/notebooks/ivp/homogeneous_medium.html) | [**UCL** Documentation](https://ucl-bug.github.io/jwave) | [Changelog](HISTORY.md)
 
 j-Wave is a library of simulators for acoustic applications. Is heavily inspired by [k-Wave](http://www.k-wave.org/) (a big portion of j-Wave is a port of k-Wave in JAX), and its intented to be used as a collection of modular blocks that can be easily included into any machine learning pipeline.
 
@@ -31,7 +33,7 @@ Follow the instructions to install [Jax with CUDA support](https://github.com/go
 Then, simply install `jwave` using pip
 
 ```bash
-pip install git+https://github.com/ucl-bug/jwave.git
+pip install git+https://github.com/djps/jwave.git
 ```
 
 For more details, see the [Linux install guide](docs/install/on_linux.md).
