@@ -97,7 +97,7 @@ def is_numeric(x):
   return isinstance(x, (int, float, complex))
 
 
-def plot_complex_field(field: Field, figsize=(15, 8), max_intensity=None):
+def plot_complex_field(field: Field, figsize=(15, 8), max_intensity=None, suptitle=None):
   """
   Plots a complex field.
 
@@ -106,6 +106,8 @@ def plot_complex_field(field: Field, figsize=(15, 8), max_intensity=None):
     figsize (tuple): Figure size.
     max_intensity (float): Maximum intensity to plot.
       Defaults to the maximum value in the field.
+    suptitle (string): Title for figure
+      Defaults to empty string
 
   Returns:
     matplotlib.pyplot.figure: Figure object.
@@ -122,6 +124,9 @@ def plot_complex_field(field: Field, figsize=(15, 8), max_intensity=None):
   axes[0].set_title("Real wavefield")
   axes[1].imshow(jnp.abs(field), vmin=0, vmax=max_intensity, cmap="magma")
   axes[1].set_title("Wavefield magnitude")
+
+  if (suptitle is not None):
+    fig.suptitle(suptitle, fontsize=16)
 
   return fig, axes
 
