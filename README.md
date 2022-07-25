@@ -38,13 +38,13 @@ pip install git+https://github.com/djps/jwave.git
 
 For more details, see the [Linux install guide](docs/install/on_linux.md).
 
-Because JAX has limited support on Windows, j-Wave can be run on Windows machines only using the Windows Subsystem for Linux. See the [Install on Windows](docs/install/on_win.md) guide for more details.
+See the [Install on Windows](docs/install/on_win.md) guide for more details.
 
 <br/>
 
 ## Example
 
-This example simulates an acoustic initial value problem, which is often used as a simple model for photoacoustic acquisitions:
+This [example](examples/basic.py) simulates an acoustic initial value problem, which is often used as a simple model for photoacoustic acquisitions:
 
 ```python
 from jax import jit
@@ -72,7 +72,7 @@ def solver(medium, p0):
 pressure = solver(medium, p0)
 ```
 
-![Simulated pressure field](docs/assets/images/readme_example_reconimage.png)
+![Simulated pressure field](docs/assets/images/readme_example_basic.png)
 
 
 <br/>
