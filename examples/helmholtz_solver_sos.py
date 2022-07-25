@@ -38,7 +38,7 @@ def phases_to_field(phases, domain):
 @jit
 def update(opt_state, tol, field):
     """
-    Problematic function
+    Update function
     """
     loss_and_field, gradient = loss_with_grad(get_params(opt_state), tol, field)
     lossval = loss_and_field[0]
@@ -114,7 +114,6 @@ if __name__ == '__main__':
     op_params = helmholtz.default_params(linear_phase, medium, omega=1.0)
     print(op_params.keys())
 
-    # does this work? 
     loss_with_grad = value_and_grad(full_loss, has_aux=True)
     # returns a callable which can return function and gradient as a pair.
 
@@ -126,7 +125,6 @@ if __name__ == '__main__':
 
     init_fun, update_fun, get_params = optimizers.adam(0.1, b1=0.9, b2=0.9)
 
-    # here
     opt_state = init_fun(sos_control_points)
 
     niterations = 10
@@ -136,7 +134,6 @@ if __name__ == '__main__':
     field = -linear_phase
     for k in pbar:
         lossval, field, opt_state = update(opt_state, tol, field)
-        # For logging
         pbar.set_description("Tol: {} Ampl: {:01.4f}".format(tol, -lossval))
         losshistory.append(lossval)
 
@@ -147,7 +144,6 @@ if __name__ == '__main__':
     plt.figure(figsize=(10, 6))
     plt.plot(-jnp.array(losshistory))  
     plt.title("Amplitude at target location")
-    #plt.Text(0.5, 1.0, 'Amplitude at target location')
 
     opt_sos_vector = get_params(opt_state)
 

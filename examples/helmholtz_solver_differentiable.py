@@ -46,32 +46,45 @@ def full_loss(transmit_phase, tol, guess, op_params):
     return loss(field), field
 
 @partial(jit, static_argnums=(1,))
-def update_static(opt_state, tol, guess, op_params):
+def update(opt_state, tol, guess, op_params):
     loss_and_field, gradient = loss_with_grad(get_params(opt_state), tol, guess, op_params)
     lossval = loss_and_field[0]
     field = loss_and_field[1]
     return lossval, field, update_fun(k, gradient, opt_state)
 
+"""
 @jit
 def update(opt_state, tol, field):
-    """
-    Problematic function
-    """
     loss_and_field, gradient = loss_with_grad(get_params(opt_state), tol, field)
     lossval = loss_and_field[0]
     field = loss_and_field[1]
     return lossval, field, update_fun(k, gradient, opt_state)
 
 def get_sos(segments, start_point=30, height=4, width=30):
-    """
-    Assigns local speed of sound
-    """
     sos = jnp.ones(N)
     for k in range(len(segments)):
         sos = sos.at[
             start_point + k * height : start_point + (k + 1) * height, 50 : 50 + width
         ].add(jax.nn.sigmoid(segments[k]))
     return FourierSeries(jnp.expand_dims(sos, -1), domain)
+
+
+def loss(field):
+    field = field.on_grid
+    return -jnp.sum(jnp.abs(field[target[0], target[1]]))
+
+
+def get_field(params, tol, field):
+    medium = Medium(domain, sound_speed=get_sos(params))
+    return helmholtz_solver(
+        medium, 1.0, linear_phase, guess=field, tol=tol, checkpoint=False
+    )
+
+
+def full_loss(params, tol, field):
+    field = get_field(params, tol, field)
+    return loss(field), field
+"""
 
 
 if __name__ == '__main__':
@@ -93,7 +106,6 @@ if __name__ == '__main__':
 
     linear_phase = phases_to_field(transmit_phase, domain)
 
-    """
     # Constructing medium physical properties
     sound_speed = jnp.ones(N)
     sound_speed = sound_speed.at[20:80, 50:80].set(2.0)
@@ -126,19 +138,19 @@ if __name__ == '__main__':
 
     opt_state = init_fun(transmit_phase)
 
-    niterations = 100
+    niterations = 10
     tol = 1e-3
     guess = None
     pbar = tqdm(range(niterations))
     for k in pbar:
-        lossval, guess, opt_state = update_static(opt_state, tol, guess, op_params)
+        lossval, guess, opt_state = update(opt_state, tol, guess, op_params)
         # For logging
         pbar.set_description("Ampl: {:01.4f}".format(-lossval))
         losshistory.append(lossval)
 
     transmit_phase = get_params(opt_state)
 
-    jnp.savez_compressed('optimized_static.npz', losshistory=losshistory, guess=guess, opt_state=opt_state, target=target, position=position)
+    jnp.savez('optimized.npz', losshistory=losshistory, target=target, position=position)
 
     fig, ax = plt.subplots(1, 2, figsize=(8,2), dpi=200)
 
@@ -161,7 +173,7 @@ if __name__ == '__main__':
     plt.figure(figsize=(10, 3))
     plt.plot(jnp.real(phase_to_apod(transmit_phase)))
     plt.plot(jnp.imag(phase_to_apod(transmit_phase)))
-    # plt.plot(jnp.abs(phase_to_apod(transmit_phase)), "r.")
+    plt.plot(jnp.abs(phase_to_apod(transmit_phase)), "r.")
     plt.title("Apodization")
 
     plt.figure(figsize=(10, 3))
@@ -170,75 +182,4 @@ if __name__ == '__main__':
     plt.xlabel("Optimization step")
     plt.grid(True)
     
-    #plt.show() 
-    """
-
-    # Speed of sound gradients
-    key = random.PRNGKey(12)
-
-    target = [60, 360]  # Target location
-
-    key, _ = random.split(key)
-    sos_control_points = random.normal(key, shape=(65,))
-    sos = get_sos(sos_control_points)
-
-    show_positive_field(sos, aspect="equal")
-
-    medium = Medium(domain, sound_speed=get_sos(sos_control_points))
-    op_params = helmholtz.default_params(linear_phase, medium, omega=1.0)
-    print(op_params.keys())
-
-    # does this work? 
-    loss_with_grad = value_and_grad(full_loss, has_aux=True)
-    # returns a callable which can return function and gradient as a pair.
-    print(loss_with_grad, dir(loss_with_grad))
-
-
-    # reset loss history
-    losshistory = []
-
-    key, _ = random.split(key)
-    sos_vector = random.normal(key, shape=(65,))
-
-    init_fun, update_fun, get_params = optimizers.adam(0.1, b1=0.9, b2=0.9)
-
-    # here
-    opt_state = init_fun(sos_control_points)
-
-    niterations = 100
-    tol = 1e-3
-    pbar = tqdm(range(niterations))
-    
-    field = -linear_phase
-    for k in pbar:
-        lossval, field, opt_state = update(opt_state, tol, field)
-        # For logging
-        pbar.set_description("Tol: {} Ampl: {:01.4f}".format(tol, -lossval))
-        losshistory.append(lossval)
-
-    transmit_phase = get_params(opt_state)
-
-    jnp.savez_compressed('optimized_1.npz', losshistory=losshistory, opt_state=opt_state, target=target, position=position)
-
-    plt.plot(-jnp.array(losshistory))  #
-    plt.title("Amplitude at target location")
-    plt.Text(0.5, 1.0, 'Amplitude at target location')
-
-    opt_sos_vector = get_params(opt_state)
-    plt.figure(figsize=(10, 6))
-
-    plt.imshow(jnp.abs(field.on_grid), vmax=0.35, cmap="inferno")
-    plt.colorbar()
-    plt.scatter(target[1], target[0])
-
-    sos = get_sos(opt_sos_vector)
-    plt.figure(figsize=(8, 8))
-    plt.imshow(sos.on_grid[..., 0])
-    plt.title("Sound speed map")
-    plt.scatter(target[1], target[0], label="Target")
-    plt.legend()
-
-    plt.figure(figsize=(8, 8))
-    plt.plot(sos.on_grid[..., 64, 0])
-
-    plt.show()
+    plt.show() 
