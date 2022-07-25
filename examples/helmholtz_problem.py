@@ -65,20 +65,20 @@ if __name__ == '__main__':
     attenuation = 0.0  # density*0
     sound_speed = 1500.0
 
-    medium = Medium(domain=domain, sound_speed=sound_speed, density=1000.0, pml_size=15)
+    medium1 = Medium(domain=domain, sound_speed=sound_speed, density=1000.0, pml_size=15)
 
-    params = helmholtz.default_params(src, medium, omega)
+    params = helmholtz.default_params(src, medium1, omega)
 
-    print("Runtime with GMRES")
+    print("\nRuntime with GMRES (homogeneous material)")
     t0 = time.time()
-    solve_helmholtz(medium, params)
+    field1 = solve_helmholtz(medium1, params).params.block_until_ready()
     t1 = time.time()
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("\nTime taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    fig1, ax1 = plot_complex_field(field, max_intensity=2e5)
+    fig1, ax1 = plot_complex_field(field1, max_intensity=2e5)
     fig1.show()
 
     # Hetrogeneous density
@@ -86,24 +86,24 @@ if __name__ == '__main__':
     density = jnp.expand_dims(density.at[:64, 170:].set(1.5), -1)
     density = FourierSeries(density, domain)
 
-    medium = Medium(domain=domain, sound_speed=sound_speed, density=density, pml_size=15)
+    medium2 = Medium(domain=domain, sound_speed=sound_speed, density=density, pml_size=15)
 
-    params = helmholtz.default_params(src, medium, omega) # Parameters may be different due to different density type
+    params = helmholtz.default_params(src, medium2, omega) # Parameters may be different due to different density type
 
-    type(params['fft_u']['k_vec'][0])
+    print( type(params['fft_u']['k_vec'][0]) )
 
-    params.keys()
+    print( params.keys() )
 
     # Solve new problem
     print("Runtime with GMRES (heterogeneous density)")
     t0 = time.time()
-    field = solve_helmholtz(medium, params)
+    field2 = solve_helmholtz(medium2, params).params.block_until_ready()
     t1 = time.time()
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("\nTime taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
-    fig2, ax2 = plot_complex_field(field, max_intensity=2e5)
+    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    fig2, ax2 = plot_complex_field(field2, max_intensity=2e5, suptitle="Heterogeneous density")
     fig2.show()
 
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     attenuation = jnp.zeros(N)
     attenuation = jnp.expand_dims(attenuation.at[64:110, 125:220].set(100), -1)
 
-    medium = Medium(
+    medium3 = Medium(
         domain=domain,
         sound_speed=sound_speed,
         density=density,
@@ -122,11 +122,13 @@ if __name__ == '__main__':
     # Solve new problem
     print("Runtime with GMRES (heterogeneous density and attenuation)")
     t0 = time.time()
-    field = solve_helmholtz(medium, params)
+    field3 = solve_helmholtz(medium3, params).params.block_until_ready()
     t1 = time.time()
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("\nTime taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
-    fig3, ax3 = plot_complex_field(field, max_intensity=2e5)
+    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    fig3, ax3 = plot_complex_field(field3, max_intensity=2e5, suptitle="Heterogeneous density and attenuation")
     fig3.show()
+
+    plt.show()
