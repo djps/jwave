@@ -66,33 +66,24 @@ scoop uninstall scoop
 to completely remove jwave and all other programs installed (e.g. the virtual machine).
 
 <br/>
-
+<!--
 ## Install using the unofficial jax wheels
-
 ⚠️ This method uses a [community supported Windows build for jax](https://github.com/cloudhan/jax-windows-builder), which is in alpha state and is not guaranteed to work. Only CPU and CUDA 11.x are supported.
-
 ### Prerequisites
 This method assumes that you've aready setup a Python environment in your Windows machine. We recommend to use Anaconda to keep your Python installation separate from the rest of your system: [this page](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html) offers a relatively quick guide to Anaconda installation and how to manage environments.
-
 ### How to install
 After activating your python environment, follow [the README](https://github.com/cloudhan/jax-windows-builder/blob/main/README.md) to install `jax` for your python and (if needed) CUDA version.
-
 Then install `jwave` using
-
 ```powershell
-pip install git+https://github.com/ucl-bug/jwave`
+pip install git+https://github.com/djps/jwave`
 ```
-
 <br/>
-
 ## Building jax from source
 The latest method is to build `jax` from source. This is not recommended for users that are not familiar with building large software packages from source.
-
 ### How to install
 Follow the [guide on the jax docs](https://jax.readthedocs.io/en/latest/developer.html#additional-notes-for-building-jaxlib-from-source-on-windows) for building `jax` from source, up to the end of the *"Running the tests"* section
-
 Then install `jwave` using
-
 ```powershell
 pip install git+https://github.com/ucl-bug/jwave
 ```
+-->

@@ -30,15 +30,15 @@ Following the phylosophy of [JAX](https://jax.readthedocs.io/en/stable/), j-Wave
 
 Follow the instructions to install [Jax with CUDA support](https://github.com/google/jax#installation) if you want to use your GPU.
 
-Then, simply install `jwave` using pip
+Then, install `jaxdf` and then `jwave` using pip
 
 ```bash
 pip install git+https://github.com/djps/jwave.git
 ```
 
-For more details, see the [Linux install guide](docs/install/on_linux.md).
+<!--For more details, see the [Linux install guide](docs/install/on_linux.md).
 
-See the [Install on Windows](docs/install/on_win.md) guide for more details.
+See the [Install on Windows](docs/install/on_win.md) guide for more details. -->
 
 <br/>
 
@@ -94,8 +94,17 @@ If you use `jwave` for your research, please consider citing it as:
 
 <br/>
 
+## Useful Papers
+
+* [Optimizing a DIscrete Loss (ODIL) to solve forward and inverse
+problems for partial differential equations using machine learning tools](https://arxiv.org/pdf/2205.04611.pdf)
+
+
+<br/>
 ## Related Projects
 
 1. [`ADSeismic.jl`](https://github.com/kailaix/ADSeismic.jl): a finite difference acoustic simulator with support for AD and JIT compilation in Julia.
 2. [`stride`](https://github.com/trustimaging/stride): a general optimisation framework for medical ultrasound tomography.
 3. [`k-wave-python`](https://github.com/waltsims/k-wave-python): A python interface to k-wave GPU accelerated binaries
+4. [`jaxwell`](): for Maxwell's equation. 
+

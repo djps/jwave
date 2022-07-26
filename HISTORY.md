@@ -4,6 +4,8 @@
 ## (latest: 22.07.2022)
 
 * Forked from original [David Sinden]
+* Created examples folder
+* edit readme 
 
 ### Features
 
