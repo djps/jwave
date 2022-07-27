@@ -14,8 +14,6 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1xAHAognF1v9un6GNvaGPSfdVeCDK8l9z?usp=sharing) 
 -->
 
-https://coveralls.io/repos/github/djps/jwave/badge.svg?branch=master
-
 [Install](#install) | [**UCL** Tutorials](https://ucl-bug.github.io/jwave/notebooks/ivp/homogeneous_medium.html) | [**UCL** Documentation](https://ucl-bug.github.io/jwave) | [Changelog](HISTORY.md)
 
 j-Wave is a library of simulators for acoustic applications. Is heavily inspired by [k-Wave](http://www.k-wave.org/) (a big portion of j-Wave is a port of k-Wave in JAX), and its intented to be used as a collection of modular blocks that can be easily included into any machine learning pipeline.
