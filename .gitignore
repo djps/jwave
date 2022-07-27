@@ -24,8 +24,9 @@ docs/test_reports/test_report.md
 
 # Data
 *.mat
+*.npy
 
-#k-wave outputs
+# k-wave outputs
 docs/benchmarks/kwave/*.png
 
 # Profiling

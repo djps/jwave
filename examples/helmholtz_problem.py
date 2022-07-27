@@ -8,9 +8,9 @@ from matplotlib import pyplot as plt
 
 import time
 
-from jwave import FiniteDifferences, FourierSeries
+from jwave import FourierSeries
 from jwave.geometry import Domain, Medium, _circ_mask
-from jwave.utils import plot_complex_field, show_positive_field
+from jwave.utils import plot_complex_field
 
 from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 
