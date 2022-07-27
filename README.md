@@ -6,12 +6,15 @@
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](LICENSE)
 [![Continous Integration](https://github.com/djps/jwave/actions/workflows/main.yml/badge.svg)](https://github.com/djps/jwave/actions/workflows/main.yml) 
+[![Coverage Status](https://coveralls.io/repos/github/djps/jwave/badge.svg)](https://coveralls.io/github/djps/jwave)
 <!-- 
 [![codecov](https://codecov.io/gh/ucl-bug/jwave/branch/main/graph/badge.svg?token=6J03OMVJS1)](https://codecov.io/gh/ucl-bug/jwave)
 [![Documentation](https://github.com/ucl-bug/jwave/actions/workflows/build_docs.yml/badge.svg)](https://ucl-bug.github.io/jwave)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ucl-bug/jwave/main?labpath=docs%2Fnotebooks%2Fivp%2Fhomogeneous_medium.ipynb)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1xAHAognF1v9un6GNvaGPSfdVeCDK8l9z?usp=sharing) 
 -->
+
+https://coveralls.io/repos/github/djps/jwave/badge.svg?branch=master
 
 [Install](#install) | [**UCL** Tutorials](https://ucl-bug.github.io/jwave/notebooks/ivp/homogeneous_medium.html) | [**UCL** Documentation](https://ucl-bug.github.io/jwave) | [Changelog](HISTORY.md)
 

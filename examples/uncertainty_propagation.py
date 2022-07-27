@@ -129,9 +129,8 @@ def compiled_simulator(medium, sources):
 
 if __name__ == '__main__':
     """
-    At the moment does not work
+    At the moment (27.07.22) this does not work
     """
-
 
     url = 'https://upload.wikimedia.org/wikipedia/commons/7/77/CT_of_sclerotic_lesions_in_the_skull_in_renal_osteodystrophy.jpg'
     fname = 'ct.jpg'
