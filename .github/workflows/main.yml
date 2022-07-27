@@ -44,7 +44,9 @@ jobs:
           coverage html
           coverage lcov          
       - name: Upload coverage data to coveralls.io
-        run: coveralls --service=github
+        run: |
+          source .venv/bin/activate
+          coveralls --service=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
