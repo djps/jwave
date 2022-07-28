@@ -1,1 +1,1 @@
-from jwave.experimental.bicgstabl import *
+from .bicgstabl import *

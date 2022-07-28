@@ -13,6 +13,8 @@ from jwave import FourierSeries
 from jwave.geometry import Domain, Medium, _circ_mask
 from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 
+from jwave.experimental.bicgstabl import *
+
 # Default figure settings
 plt.rcParams.update({'font.size': 12})
 plt.rcParams["figure.dpi"] = 300
@@ -90,7 +92,7 @@ if __name__ == '__main__':
     axes[2].set_title(f"Wavefield magnitude")
     plt.show()
 
-    print("GMRES")
+    print("GMRES", end='', flush=True)
     t0 = time.time()
     wrapper_gmres(medium, params)
     #helmholtz_solver(medium, omega=1.0, source=src_field, guess=None, method='gmres', tol=1e-3).block_until_ready()
@@ -100,7 +102,7 @@ if __name__ == '__main__':
     minutes, seconds = divmod(rem, 60)
     print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("BiCGStab 1")
+    print("BiCGStab 1", end='', flush=True)
     t0 = time.time()
     wrapper_bicgstab(medium, params)
     #wrapper_gmres(src_field, medium, method='bicgstab', omega=1.0, guess=None, tol=1e-3).block_until_ready()
@@ -111,7 +113,7 @@ if __name__ == '__main__':
     minutes, seconds = divmod(rem, 60)
     print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("BiCGStab 2")
+    print("BiCGStab 2", end='', flush=True)
     t0 = time.time()
     fast_solver(medium, params, 'bicgstab')
     t1 = time.time()
@@ -120,7 +122,9 @@ if __name__ == '__main__':
     minutes, seconds = divmod(rem, 60)
     print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("BiCGStabL")
+    hello_world()
+
+    print("BiCGStabL", end='', flush=True)
     t0 = time.time()
     wrapper_bicgstabl(medium, params, 'bicgstabl')
     t1 = time.time()
