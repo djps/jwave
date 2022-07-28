@@ -1,2 +1,2 @@
 # nopycln: file
-from .bicgstabl import *
+from .new_solver import *
