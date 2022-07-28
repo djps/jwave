@@ -102,6 +102,7 @@ problems for partial differential equations using machine learning tools](https:
 
 
 <br/>
+
 ## Related Projects
 
 1. [`ADSeismic.jl`](https://github.com/kailaix/ADSeismic.jl): a finite difference acoustic simulator with support for AD and JIT compilation in Julia.
