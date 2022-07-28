@@ -17,8 +17,10 @@ from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 
 #from jwave.experimental.bicgstabl import _hello_world, bicgstabl
 import jwave
-from jwave import experimental
-#import jwave.experimental as experimental
+#from jwave import experimental
+print(help(jwave))
+
+import jwave.experimental as experimental
 
 # Default figure settings
 plt.rcParams.update({'font.size': 12})
