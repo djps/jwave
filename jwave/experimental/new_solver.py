@@ -21,7 +21,7 @@ from jax._src.util import safe_map as map
 _dot = partial(jnp.dot, precision=lax.Precision.HIGHEST)
 _vdot = partial(jnp.vdot, precision=lax.Precision.HIGHEST)
 
-def hello_world():
+def _hello_world():
     print("hello world!")
 
 # aliases for working with pytrees

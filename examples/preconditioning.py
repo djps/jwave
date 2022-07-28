@@ -9,11 +9,16 @@ from jax import jit
 
 from matplotlib import pyplot as plt
 
+
+
 from jwave import FourierSeries
 from jwave.geometry import Domain, Medium, _circ_mask
 from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 
-from jwave.experimental.bicgstabl import *
+#from jwave.experimental.bicgstabl import _hello_world, bicgstabl
+import jwave
+from jwave import experimental
+#import jwave.experimental as experimental
 
 # Default figure settings
 plt.rcParams.update({'font.size': 12})
@@ -122,7 +127,7 @@ if __name__ == '__main__':
     minutes, seconds = divmod(rem, 60)
     print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    hello_world()
+    _hello_world()
 
     print("BiCGStabL", end='', flush=True)
     t0 = time.time()
