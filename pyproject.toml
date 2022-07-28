@@ -11,23 +11,3 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
-
-[project]
-name = "example_package_YOUR_USERNAME_HERE"
-version = "0.0.1"
-authors = [
-  { name="David Sinden", email="email@address" },
-]
-description = "fork"
-readme = "README.md"
-license = { file="LICENSE" }
-requires-python = ">=3.7"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-
-[project.urls]
-"Homepage" = "https://github.com/djps/jwave"
-"Bug Tracker" = "https://github.com/djps/jwave/issues"
