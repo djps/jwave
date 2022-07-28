@@ -9,18 +9,18 @@ from jax import jit
 
 from matplotlib import pyplot as plt
 
-
-
 from jwave import FourierSeries
 from jwave.geometry import Domain, Medium, _circ_mask
 from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 
 #from jwave.experimental.bicgstabl import _hello_world, bicgstabl
-import jwave
-#from jwave import experimental
-print(help(jwave))
+#import jwave
+#print(help(jwave))
 
-import jwave.experimental as experimental
+from jwave.experimental.new_solver import _hello_world, bicgstabl
+
+
+#import jwave.experimental as experimental
 
 # Default figure settings
 plt.rcParams.update({'font.size': 12})
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     axes[2].set_title(f"Wavefield magnitude")
     plt.show()
 
-    print("GMRES", end='', flush=True)
+    print("GMRES ... ", end='', flush=True)
     t0 = time.time()
     wrapper_gmres(medium, params)
     #helmholtz_solver(medium, omega=1.0, source=src_field, guess=None, method='gmres', tol=1e-3).block_until_ready()
@@ -107,9 +107,9 @@ if __name__ == '__main__':
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    print("time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("BiCGStab 1", end='', flush=True)
+    print("BiCGStab 1 ... ", end='', flush=True)
     t0 = time.time()
     wrapper_bicgstab(medium, params)
     #wrapper_gmres(src_field, medium, method='bicgstab', omega=1.0, guess=None, tol=1e-3).block_until_ready()
@@ -118,24 +118,24 @@ if __name__ == '__main__':
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    print("time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("BiCGStab 2", end='', flush=True)
+    print("BiCGStab 2 ... ", end='', flush=True)
     t0 = time.time()
     fast_solver(medium, params, 'bicgstab')
     t1 = time.time()
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    print("time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
     _hello_world()
 
-    print("BiCGStabL", end='', flush=True)
+    print("BiCGStabL ... ", end='', flush=True)
     t0 = time.time()
-    wrapper_bicgstabl(medium, params, 'bicgstabl')
+    wrapper_bicgstabl(medium, params)
     t1 = time.time()
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)
     minutes, seconds = divmod(rem, 60)
-    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+    print("time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))

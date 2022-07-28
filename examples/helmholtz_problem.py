@@ -14,7 +14,6 @@ from jwave.utils import plot_complex_field
 
 from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 
-import jwave.experimental.bicgstabl 
 
 @jit
 def solve_helmholtz(medium, params):

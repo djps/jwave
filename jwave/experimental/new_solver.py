@@ -83,8 +83,6 @@ def _bicgstabl_solve(A, b, x0=None, *, maxiter, tol=1e-5, atol=0.0, M=_identity)
     bs = _vdot_real_tree(b, b)
     atol2 = jnp.maximum(jnp.square(tol) * bs, jnp.square(atol))
 
-    # https://en.wikipedia.org/wiki/Biconjugate_gradient_stabilized_method#Preconditioned_BiCGSTAB
-
     def cond_fun(value):
         x, r, *_, k = value
         rs = _vdot_real_tree(r, r)
@@ -166,17 +164,7 @@ def _isolve(_isolve_solve, A, b, x0=None, *, tol=1e-5, atol=0.0,  maxiter=None, 
 
 
 def bicgstabl(A, b, x0=None, *, tol=1e-5, atol=0.0, maxiter=None, M=None):
-    """Use Bi-Conjugate Gradient Stable iteration to solve ``Ax = b``.
-
-    The numerics of JAX's ``bicgstab`` should exact match SciPy's
-    ``bicgstab`` (up to numerical precision), but note that the interface
-    is slightly different: you need to supply the linear operator ``A`` as
-    a function instead of a sparse matrix or ``LinearOperator``.
-
-    As with ``cg``, derivatives of ``bicgstab`` are implemented via implicit
-    differentiation with another ``bicgstab`` solve, rather than by
-    differentiating *through* the solver. They will be accurate only if
-    both solves converge.
+    """Use Modified Bi-Conjugate Gradient Stable iteration to solve ``Ax = b``.
 
     Parameters
     ----------

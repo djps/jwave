@@ -8,7 +8,7 @@ from jaxdf.discretization import Field, FourierSeries, OnGrid
 from jaxdf.geometry import Domain
 from jaxdf.operators import functional
 
-from jwave.experimental import bicgstabl
+from jwave.experimental.new_solver import bicgstabl
 
 from jwave.geometry import Medium
 
