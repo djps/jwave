@@ -108,5 +108,5 @@ problems for partial differential equations using machine learning tools](https:
 1. [`ADSeismic.jl`](https://github.com/kailaix/ADSeismic.jl): a finite difference acoustic simulator with support for AD and JIT compilation in Julia.
 2. [`stride`](https://github.com/trustimaging/stride): a general optimisation framework for medical ultrasound tomography.
 3. [`k-wave-python`](https://github.com/waltsims/k-wave-python): A python interface to k-wave GPU accelerated binaries
-4. [`jaxwell`](): for Maxwell's equation. 
+4. [`jaxwell`](https://github.com/stanfordnqp/jaxwell): for Maxwell's equation. 
 
