@@ -27,9 +27,9 @@ Write-Output "-- jwave installer: Installing Git."
 scoop bucket add extras
 scoop install git
 
-# Cloning jwave
+# Cloning jwave from forked directory
 Write-Output "-- jwave installer: Cloning jwave."
-git clone  git@github.com:ucl-bug/jwave.git $HOME/.jwave
+git clone  git@github.com:djps/jwave.git $HOME/.jwave
 Set-Location $HOME/.jwave
 
     

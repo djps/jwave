@@ -17,7 +17,6 @@ from jwave.acoustics.time_harmonic import helmholtz, helmholtz_solver
 plt.rcParams.update({'font.size': 12})
 plt.rcParams["figure.dpi"] = 300
 
-
 @partial(jit, static_argnames=['method'], backend='gpu')
 def fast_solver(medium, params, method):
     return helmholtz_solver(medium, omega, src_field, guess=None, method=method, checkpoint=False, params=params)
@@ -29,6 +28,10 @@ def wrapper_gmres(medium, params):
 @partial(jit, backend='gpu')
 def wrapper_bicgstab(medium, params):
     return helmholtz_solver(medium, omega, src_field, guess=None, method='bicgstab', checkpoint=False, params=params)
+
+@partial(jit, backend='gpu')
+def wrapper_bicgstabl(medium, params):
+    return helmholtz_solver(medium, omega, src_field, guess=None, method='bicgstabl', checkpoint=False, params=params)
 
 @jit
 def solve_helmholtz(medium, params):
@@ -76,7 +79,7 @@ if __name__ == '__main__':
 
     field = field.on_grid / jnp.amax(jnp.abs(field.on_grid))
 
-    fig, axes = plt.subplots(3, 1, figsize=(17,12))
+    fig, axes = plt.subplots(3, 1)
     axes[0].imshow(sound_speed, cmap="gray")
     axes[0].imshow(attenuation, alpha=attenuation * 10.0)
     axes[0].imshow(density-1.0, alpha=(density-1.0) * 2.0, cmap="seismic")
@@ -86,7 +89,6 @@ if __name__ == '__main__':
     axes[2].imshow(jnp.abs(field), vmin=0, vmax=0.2, cmap="magma")
     axes[2].set_title(f"Wavefield magnitude")
     plt.show()
-
 
     print("GMRES")
     t0 = time.time()
@@ -98,7 +100,7 @@ if __name__ == '__main__':
     minutes, seconds = divmod(rem, 60)
     print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("Bi-CGSTAB")
+    print("BiCGStab 1")
     t0 = time.time()
     wrapper_bicgstab(medium, params)
     #wrapper_gmres(src_field, medium, method='bicgstab', omega=1.0, guess=None, tol=1e-3).block_until_ready()
@@ -109,9 +111,18 @@ if __name__ == '__main__':
     minutes, seconds = divmod(rem, 60)
     print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
 
-    print("Bi-CGSTAB")
+    print("BiCGStab 2")
     t0 = time.time()
     fast_solver(medium, params, 'bicgstab')
+    t1 = time.time()
+    time_elapsed = t1-t0
+    hours, rem = divmod(time_elapsed, 3600)
+    minutes, seconds = divmod(rem, 60)
+    print("Time taken {:0>2}:{:0>2}:{:05.2f}\n".format(int(hours), int(minutes), seconds))
+
+    print("BiCGStabL")
+    t0 = time.time()
+    wrapper_bicgstabl(medium, params, 'bicgstabl')
     t1 = time.time()
     time_elapsed = t1-t0
     hours, rem = divmod(time_elapsed, 3600)

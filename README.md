@@ -37,7 +37,10 @@ Then, install `jaxdf` and then `jwave` using pip
 pip install git+https://github.com/djps/jwave.git
 ```
 
-<!--For more details, see the [Linux install guide](docs/install/on_linux.md).
+<!--
+The pip option -e will use setuptools, so use setup.py which I haven't edited.
+
+For more details, see the [Linux install guide](docs/install/on_linux.md).
 
 See the [Install on Windows](docs/install/on_win.md) guide for more details. -->
 
@@ -58,7 +61,7 @@ from jwave.utils import load_image_to_numpy
 # Simulation parameters
 N, dx = (256, 256), (0.1e-3, 0.1e-3)
 domain = Domain(N, dx)
-medium = Medium(domain=domain, sound_speed=1500.)
+medium = Medium(domain=domain, sound_speed=1500.0)
 time_axis = TimeAxis.from_medium(medium, cfl=0.3, t_end=.8e-05)
 
 # Initial pressure field

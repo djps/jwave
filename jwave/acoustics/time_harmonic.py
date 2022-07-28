@@ -8,6 +8,8 @@ from jaxdf.discretization import Field, FourierSeries, OnGrid
 from jaxdf.geometry import Domain
 from jaxdf.operators import functional
 
+from jwave.experimental.bicgstabl import bicgstabl
+
 from jwave.geometry import Medium
 
 from .operators import helmholtz
@@ -213,10 +215,14 @@ def helmholtz_solver(
   restart = kwargs['restart'] if 'restart' in kwargs else 10
   maxiter = kwargs['maxiter'] if 'maxiter' in kwargs else 1000
   solve_method = kwargs['solve_method'] if 'solve_method' in kwargs else 'batched'
+  
   if method == 'gmres':
     out = gmres(helm_func, source, guess, tol=tol, restart=restart, maxiter=maxiter, solve_method=solve_method)[0]
   elif method == 'bicgstab':
     out = bicgstab(helm_func, source, guess, tol=tol, maxiter=maxiter)[0]
+  elif method == 'bicgstabl':
+    out = bicgstabl(helm_func, source, guess, tol=tol, maxiter=maxiter)[0]
+
   return -1j*omega*out, None
 
 
