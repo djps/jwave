@@ -14,6 +14,8 @@ from jwave.acoustics.time_harmonic import helmholtz_solver
 from jwave.geometry import Domain, Medium
 from jwave.utils import plot_comparison
 
+from jwave.experimental.new_solver import bicgstabl
+
 from .utils import log_accuracy
 
 # Default figure settings
@@ -47,6 +49,7 @@ def _get_density_interface(domain):
 def _get_homog_density(domain):
   return 1000.0
 
+# Setting attenuation
 def _homog_attenuation_constructor(value = 0.1):
   def _att_setter(domain):
     return value
@@ -60,6 +63,10 @@ def heterog_attenuation_constructor(value = 0.1):
     return att
   return _att_setter
 
+# Setting solver
+def _solver_setter(solver_type: str = 'gmres'):
+  return solver_type
+
 
 def _test_setter(
   N: Tuple[int] = (128,128),
@@ -72,6 +79,7 @@ def _test_setter(
   rho0_constructor = _get_homog_density,
   alpha_constructor = _homog_attenuation_constructor(0.0),
   rel_err = 1e-2,
+  solver = _solver_setter('gmres')
 ):
   dx = tuple([dx]*len(N))
   assert len(N) == len(src_location), "src_location must have same length as N"
@@ -86,6 +94,7 @@ def _test_setter(
     "c0_constructor" : c0_constructor,
     "rho0_constructor" : rho0_constructor,
     "rel_err" : rel_err,
+    "solver" : solver,
   }
 
 TEST_SETTINGS = {
@@ -109,7 +118,8 @@ TEST_SETTINGS = {
     alpha_constructor = heterog_attenuation_constructor(100.0),
     omega=1e6,
     rel_err=0.01
-  )
+  ),
+  "helmholtz_homog_bicgstab": _test_setter(solver="bicgstab")
 }
 
 
@@ -131,6 +141,9 @@ def test_helmholtz(
   attenuation = settings["alpha_constructor"](domain)
   sound_speed = settings["c0_constructor"](domain)
   density = settings["rho0_constructor"](domain)
+  
+  # solver
+  solver = settings["solver"]
 
   # Move everything to the CPU
   cpu = devices("cpu")[0]
@@ -143,7 +156,7 @@ def test_helmholtz(
     domain = domain,
     sound_speed = sound_speed,
     density = density,
-    attenuation  = attenuation,
+    attenuation = attenuation,
     pml_size=settings["PMLSize"]
   )
 
@@ -155,7 +168,7 @@ def test_helmholtz(
   # Run simulation
   @partial(jit, backend='cpu')
   def run_simulation(src_field):
-    return helmholtz_solver(medium, omega, src_field, tol=1e-5)
+    return helmholtz_solver(medium, omega, src_field, method=solver, tol=1e-5)
 
   # Extract last field
   solution_field = run_simulation(src_field).on_grid[:,:,0]
@@ -183,6 +196,7 @@ def test_helmholtz(
       "source_magnitude": magnitude,
       "source_location": src_location,
       "pml_size": settings["PMLSize"],
+      "solver": solver,
     }
     in_filepath = dir_path + '/kwave_data/setup_' + matfile
     savemat(in_filepath, mdict)
