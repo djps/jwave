@@ -119,7 +119,8 @@ TEST_SETTINGS = {
     omega=1e6,
     rel_err=0.01
   ),
-  "helmholtz_homog_bicgstab": _test_setter(solver="bicgstab")
+  "helmholtz_homog_bicgstab": _test_setter(solver="bicgstab"),
+  "helmholtz_homog_bicgstabl": _test_setter(solver="bicgstabl")
 }
 
 
