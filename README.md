@@ -100,8 +100,7 @@ If you use `jwave` for your research, please consider citing it as:
 
 ## Useful Papers
 
-* [Optimizing a DIscrete Loss (ODIL) to solve forward and inverse
-problems for partial differential equations using machine learning tools](https://arxiv.org/pdf/2205.04611.pdf)
+* [Optimizing a DIscrete Loss (ODIL) to solve forward and inverse problems for partial differential equations using machine learning tools](https://arxiv.org/pdf/2205.04611.pdf)
 
 
 <br/>
